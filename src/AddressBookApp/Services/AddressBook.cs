@@ -30,9 +30,8 @@ namespace AddressBookApp.Services
         public Contact? FindContact(string firstName, string lastName)
         {
             return contacts.FirstOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
-
-            return null;
         }
+
         public void UpdateContact(Contact contact)
         {
             ContactValidator validator = new ContactValidator();
