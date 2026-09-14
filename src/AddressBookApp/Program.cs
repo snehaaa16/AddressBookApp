@@ -1,4 +1,6 @@
-﻿using AddressBookApp.Models;
+﻿using AddressBookApp.Exception;
+using AddressBookApp.Models;
+using AddressBookApp.Validation;
 
 namespace AddressBookApp;
 class Program
@@ -8,7 +10,7 @@ class Program
         Contact contact = new Contact(
             "Sneha",
             "Gaba",
-            "12 Sector-9",
+            "Sector-9",
             "Ambala",
             "Haryana",
             "134003",
@@ -17,5 +19,21 @@ class Program
         );
 
         Console.WriteLine(contact.ToString());
+        Console.WriteLine();
+        Console.WriteLine("       ------------------------------------VALIDATION---------------------------------------       ");
+
+        ContactValidator contactValidator = new ContactValidator();
+
+        try
+        {
+            contactValidator.Validate(contact);
+            Console.WriteLine(contact.ToString());
+            Console.WriteLine();
+            Console.WriteLine("Contact is valid.");
+        }
+        catch (InvalidContactException ex)
+        {
+            Console.WriteLine($"Error: InvalidContactException: {ex.Message}");
+        }
     }
 }
