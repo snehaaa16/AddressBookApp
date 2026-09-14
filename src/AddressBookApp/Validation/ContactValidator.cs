@@ -12,8 +12,8 @@ namespace AddressBookApp.Validation
         public readonly string FirstLastNameRegex = @"^[A-Z][A-Za-z]{2,}$";
         public readonly string AddressRegex = @"^.{4,}$";
         public readonly string CityStateRegex = @"^[A-Za-z]{4,}$";
-        public readonly string ZipRegex = @"^[0-9]{6}";
-        public readonly string PhoneRegex = @"^[0-9]{10}";
+        public readonly string ZipRegex = @"^[0-9]{6}$";
+        public readonly string PhoneRegex = @"^[0-9]{10}$";
         public readonly string EmailRegex = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
         public bool IsValidFirstName(string firstName)
         {
