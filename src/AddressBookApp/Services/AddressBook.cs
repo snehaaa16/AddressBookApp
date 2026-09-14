@@ -24,7 +24,14 @@ namespace AddressBookApp.Services
         {
             ContactValidator contactValidator = new ContactValidator();
             contactValidator.Validate(c);
+            bool exists = Contacts.Any(contact => contact.FirstName == c.FirstName && contact.LastName == c.LastName);
+            if (exists)
+            {
+                Console.WriteLine($"Contact '{c.FirstName} {c.LastName}' already exists. Duplicate not added.");
+                return;
+            }
             contacts.Add(c);
+            Console.WriteLine("Contact added successfully.");
         }
 
         public Contact? FindContact(string firstName, string lastName)

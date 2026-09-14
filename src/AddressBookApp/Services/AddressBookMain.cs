@@ -1,55 +1,48 @@
 ﻿using AddressBookApp.Exception;
 using AddressBookApp.Models;
 using AddressBookApp.Validation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AddressBookApp.Services
 {
     public class AddressBookMain
     {
+        private List<AddressBook> books = new List<AddressBook>();
         public void Run()
         {
             AddressBook addressBook = new AddressBook();
+            books.Add(addressBook);
             while (true)
             {
+                Console.WriteLine();
                 Console.WriteLine("1. Add Contact");
                 Console.WriteLine("2. Show All Contacts");
                 Console.WriteLine("3. Edit Contact");
+                Console.WriteLine("4: Delete Contact");
+                Console.WriteLine("5. Count Contacts");
                 Console.WriteLine("0. Exit");
 
                 Console.Write("> ");
-                string choice = Console.ReadLine();
+                string choice = Console.ReadLine() ?? "";
 
                 switch (choice)
                 {
                     case "1":
-
                         Console.Write("Enter first name: ");
                         string firstName = Console.ReadLine() ?? "";
-
                         Console.Write("Enter last name: ");
                         string lastName = Console.ReadLine() ?? "";
-
                         Console.Write("Enter address: ");
                         string address = Console.ReadLine() ?? "";
-
                         Console.Write("Enter city: ");
                         string city = Console.ReadLine() ?? "";
-
                         Console.Write("Enter state: ");
                         string state = Console.ReadLine() ?? "";
-
                         Console.Write("Enter zip: ");
                         string zip = Console.ReadLine() ?? "";
-
                         Console.Write("Enter phone number: ");
                         string phoneNumber = Console.ReadLine() ?? "";
-
                         Console.Write("Enter email: ");
                         string email = Console.ReadLine() ?? "";
-
                         Contact contact = new Contact(
                             firstName,
                             lastName,
@@ -59,77 +52,85 @@ namespace AddressBookApp.Services
                             zip,
                             phoneNumber,
                             email
-                        );
-
+                        ); 
                         try
                         {
+                            ContactValidator validator = new ContactValidator();
+                            validator.Validate(contact);
+                            //bool exists = addressBook.Contacts.Any(c => c.FirstName == firstName && c.LastName == lastName);
+                            //if (exists)
+                            //{
+                            //    Console.WriteLine($"Contact '{firstName} {lastName}' already exists. Duplicate not added.");
+                            //}
+                            //else
+                            //{
                             addressBook.AddContact(contact);
                             Console.WriteLine("Contact added successfully.");
+                            //}
                         }
                         catch (InvalidContactException ex)
                         {
                             Console.WriteLine($"Error: InvalidContactException: {ex.Message}");
                         }
-
                         break;
 
                     case "2":
                         addressBook.printAll();
                         break;
-                    case "0":
-                        return;
-                    case "3":
 
+                    case "3":
                         Console.Write("Enter first name: ");
                         firstName = Console.ReadLine() ?? "";
-
                         Console.Write("Enter last name: ");
                         lastName = Console.ReadLine() ?? "";
-
                         Contact? contact1 = addressBook.FindContact(firstName, lastName);
-
                         if (contact1 == null)
                         {
                             Console.WriteLine("Contact not found.");
                             break;
                         }
-
                         Console.WriteLine("Contact found. Press Enter to keep the existing value.");
-
+                        string newFirstName = contact1.FirstName;
+                        string newLastName = contact1.LastName;
+                        string newAddress = contact1.Address;
+                        string newCity = contact1.City;
+                        string newState = contact1.State;
+                        string newZip = contact1.Zip;
+                        string newPhone = contact1.PhoneNumber;
+                        string newEmail = contact1.Email;
                         Console.Write($"First name ({contact1.FirstName}): ");
-                        string newFirstName = Console.ReadLine() ?? "";
+                        string input = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrWhiteSpace(input)) newFirstName = input;
 
                         Console.Write($"Last name ({contact1.LastName}): ");
-                        string newLastName = Console.ReadLine() ?? "";
+                        input = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrWhiteSpace(input)) newLastName = input;
 
                         Console.Write($"Address ({contact1.Address}): ");
-                        string newAddress = Console.ReadLine() ?? "";
+                        input = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrWhiteSpace(input)) newAddress = input;
 
                         Console.Write($"City ({contact1.City}): ");
-                        string newCity = Console.ReadLine() ?? "";
+                        input = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrWhiteSpace(input)) newCity = input;
 
                         Console.Write($"State ({contact1.State}): ");
-                        string newState = Console.ReadLine() ?? "";
+                        input = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrWhiteSpace(input)) newState = input;
+
 
                         Console.Write($"Zip ({contact1.Zip}): ");
-                        string newZip = Console.ReadLine() ?? "";
+                        input = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrWhiteSpace(input)) newZip = input;
 
                         Console.Write($"Phone ({contact1.PhoneNumber}): ");
-                        string newPhone = Console.ReadLine() ?? "";
+                        input = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrWhiteSpace(input)) newPhone = input;
 
                         Console.Write($"Email ({contact1.Email}): ");
-                        string newEmail = Console.ReadLine() ?? "";
+                        input = Console.ReadLine() ?? "";
+                        if (!string.IsNullOrWhiteSpace(input)) newEmail = input;
 
-                        newFirstName = newFirstName == "" ? contact1.FirstName : newFirstName;
-                        newLastName = newLastName == "" ? contact1.LastName : newLastName;
-                        newAddress = newAddress == "" ? contact1.Address : newAddress;
-                        newCity = newCity == "" ? contact1.City : newCity;
-                        newState = newState == "" ? contact1.State : newState;
-                        newZip = newZip == "" ? contact1.Zip : newZip;
-                        newPhone = newPhone == "" ? contact1.PhoneNumber : newPhone;
-                        newEmail = newEmail == "" ? contact1.Email : newEmail;
-
-                        // Create temporary contact
                         Contact updatedContact = new Contact(
                             newFirstName,
                             newLastName,
@@ -143,31 +144,54 @@ namespace AddressBookApp.Services
 
                         try
                         {
-                            ContactValidator validator = new ContactValidator();
+                            ContactValidator validator =new ContactValidator();
                             validator.Validate(updatedContact);
-
-                            contact1.FirstName = updatedContact.FirstName;
-                            contact1.LastName = updatedContact.LastName;
-                            contact1.Address = updatedContact.Address;
-                            contact1.City = updatedContact.City;
-                            contact1.State = updatedContact.State;
-                            contact1.Zip = updatedContact.Zip;
-                            contact1.PhoneNumber = updatedContact.PhoneNumber;
+                            contact1.FirstName =updatedContact.FirstName;
+                            contact1.LastName =updatedContact.LastName;
+                            contact1.Address =updatedContact.Address;
+                            contact1.City =updatedContact.City;
+                            contact1.State =updatedContact.State;
+                            contact1.Zip =updatedContact.Zip;
+                            contact1.PhoneNumber =updatedContact.PhoneNumber;
                             contact1.Email = updatedContact.Email;
-
                             Console.WriteLine("Contact updated successfully.");
                         }
                         catch (InvalidContactException ex)
                         {
                             Console.WriteLine($"Error: InvalidContactException: {ex.Message}");
                         }
-
                         break;
+
+                    case "4":
+                        Console.Write("Enter first name to delete: ");
+                        string firstNameToDelete = Console.ReadLine() ?? "";
+
+                        Console.Write("Enter last name to delete: ");
+                        string lastNameToDelete = Console.ReadLine() ?? "";
+
+                        Contact? contact2 = addressBook.FindContact(firstNameToDelete,lastNameToDelete);
+                        if (contact2 == null)
+                        {
+                            Console.WriteLine("Contact not found.");
+                            break;
+                        }
+                        addressBook.Contacts.Remove(contact2);
+                        Console.WriteLine("Contact deleted.");
+                        break;
+                    case "5":
+                        int totalCount = books.Sum(b => b.Contacts.Count);
+                        Console.WriteLine($"Total contacts in all address books: {totalCount}");
+                        break;
+
+                    case "0":
+                        return;
+
                     default:
-                        Console.WriteLine("Invalid choice");
+                        Console.WriteLine("Invalid choice.");
                         break;
                 }
             }
         }
+
     }
 }
