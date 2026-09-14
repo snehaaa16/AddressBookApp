@@ -27,6 +27,18 @@ namespace AddressBookApp.Services
             contacts.Add(c);
         }
 
+        public Contact? FindContact(string firstName, string lastName)
+        {
+            return contacts.FirstOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
+
+            return null;
+        }
+        public void UpdateContact(Contact contact)
+        {
+            ContactValidator validator = new ContactValidator();
+            validator.Validate(contact);
+        }
+
         public void printAll()
         {
             foreach(Contact contact in contacts)
