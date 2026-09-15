@@ -19,6 +19,7 @@ namespace AddressBookApp.Services
                 Console.WriteLine("3. Edit Contact");
                 Console.WriteLine("4: Delete Contact");
                 Console.WriteLine("5. Count Contacts");
+                Console.WriteLine("6. Find Contacts by City or State");
                 Console.WriteLine("0. Exit");
 
                 Console.Write("> ");
@@ -55,18 +56,7 @@ namespace AddressBookApp.Services
                         ); 
                         try
                         {
-                            ContactValidator validator = new ContactValidator();
-                            validator.Validate(contact);
-                            //bool exists = addressBook.Contacts.Any(c => c.FirstName == firstName && c.LastName == lastName);
-                            //if (exists)
-                            //{
-                            //    Console.WriteLine($"Contact '{firstName} {lastName}' already exists. Duplicate not added.");
-                            //}
-                            //else
-                            //{
                             addressBook.AddContact(contact);
-                            Console.WriteLine("Contact added successfully.");
-                            //}
                         }
                         catch (InvalidContactException ex)
                         {
@@ -181,6 +171,26 @@ namespace AddressBookApp.Services
                     case "5":
                         int totalCount = books.Sum(b => b.Contacts.Count);
                         Console.WriteLine($"Total contacts in all address books: {totalCount}");
+                        break;
+
+                    case "6":
+                        Console.Write("Enter city or state to search: ");
+                        string location = Console.ReadLine() ?? "";
+                        List<Contact> results = new List<Contact>();
+                        foreach (AddressBook book in books)
+                        {
+                            results.AddRange(book.FindContactsByCityOrState(location));
+                        }
+                        if (results.Count == 0)
+                        {
+                            Console.WriteLine("No contacts found.");
+                            break;
+                        }
+                        Console.WriteLine($"Found {results.Count} contact(s):");
+                        foreach (Contact c in results)
+                        {
+                            Console.WriteLine(c);
+                        }
                         break;
 
                     case "0":

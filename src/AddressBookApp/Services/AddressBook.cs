@@ -34,6 +34,11 @@ namespace AddressBookApp.Services
             Console.WriteLine("Contact added successfully.");
         }
 
+        public List<Contact?> FindContactsByCityOrState(string city,string state)
+        {
+            return contacts.Where(c => c.City == city && c.State == state).ToList();
+        }
+
         public Contact? FindContact(string firstName, string lastName)
         {
             return contacts.FirstOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
