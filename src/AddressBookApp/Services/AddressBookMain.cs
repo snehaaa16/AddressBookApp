@@ -20,6 +20,7 @@ namespace AddressBookApp.Services
                 Console.WriteLine("4: Delete Contact");
                 Console.WriteLine("5. Count Contacts");
                 Console.WriteLine("6. Find Contacts by City or State");
+                Console.WriteLine("7. Display Contacts Group BY City");
                 Console.WriteLine("0. Exit");
 
                 Console.Write("> ");
@@ -191,6 +192,20 @@ namespace AddressBookApp.Services
                         {
                             Console.WriteLine(c);
                         }
+                        break;
+
+                    case "7":
+                        Console.WriteLine("Enter the city to search: ");
+                        city = Console.ReadLine() ;
+                        
+                        books.SelectMany(b => b.Contacts).Where(c => c.City.Equals(city, StringComparison.OrdinalIgnoreCase)).ToList().ForEach(c=>Console.WriteLine(c.ToString()));
+                        break;
+
+                    case "8":
+                        Console.WriteLine("Enter the state to search: ");
+                        state = Console.ReadLine();
+
+                        books.SelectMany(b => b.Contacts).Where(c => c.State.Equals(state, StringComparison.OrdinalIgnoreCase)).ToList().ForEach(c => Console.WriteLine(c.ToString()));
                         break;
 
                     case "0":
