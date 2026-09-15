@@ -11,6 +11,41 @@ namespace AddressBookApp.Services
         {
             AddressBook addressBook = new AddressBook();
             books.Add(addressBook);
+            Contact contac1 = new Contact(
+                   "Sneha",
+                   "Gaba",
+                   "Sector-9",
+                   "Ambala",
+                   "Haryana",
+                   "134003",
+                   "9876543210",
+                   "snehagaba233@mail.com"
+             );
+            addressBook.AddContact(contac1);
+            Contact contac2 = new Contact(
+                "Rahul",
+                "Sharma",
+                "Model-Town",
+                "Delhi",
+                "Punjab",
+                "110001",
+                "9876543211",
+                "rahul@mail.com"
+            );
+            addressBook.AddContact(contac2);
+
+            Contact contac3 = new Contact(
+                "Rahul",
+                "Sharma",
+                "Model-Town",
+                "Ambala",
+                "Punjab",
+                "110001",
+                "9876543211",
+                "rahul@mail.com"
+            );
+            addressBook.AddContact(contac3);
+
             while (true)
             {
                 Console.WriteLine();
@@ -20,10 +55,12 @@ namespace AddressBookApp.Services
                 Console.WriteLine("4: Delete Contact");
                 Console.WriteLine("5. Count Contacts");
                 Console.WriteLine("6. Find Contacts by City or State");
-                Console.WriteLine("7. Display Contacts Group BY City");
-                Console.WriteLine("8. Display Contacts Group BY State");
-                Console.WriteLine("9. Display contacts grouped by city, and grouped by state");
-                Console.WriteLine("10. Count by city or State");
+                Console.WriteLine("7. Display Contacts Group By City");
+                Console.WriteLine("8. Display Contacts Group By State");
+                Console.WriteLine("9. Display Contacts Grouped By City and State");
+                Console.WriteLine("10. Count Contacts By City or State");
+                Console.WriteLine("11. Sort Entries by Name");
+                Console.WriteLine("12. Sort Entries by City / State / Zip");
                 Console.WriteLine("0. Exit");
 
 
@@ -240,6 +277,51 @@ namespace AddressBookApp.Services
                             }
                         }
 
+                        break;
+
+                    case "10":
+                        Console.WriteLine("--- By City ---");
+                        allContacts = books.SelectMany(b => b.Contacts).ToList();
+
+                        var cityCounts = allContacts
+                            .GroupBy(c => c.City)
+                            .Select(g => new
+                            {
+                                City = g.Key,
+                                Count = g.Count()
+                            });
+
+                        foreach (var group in cityCounts)
+                        {
+                            Console.WriteLine($"{group.City} = {group.Count}");
+                        }
+
+                        Console.WriteLine("--- By State ---");
+
+                        var stateCounts = allContacts
+                            .GroupBy(c => c.State)
+                            .Select(g => new
+                            {
+                                State = g.Key,
+                                Count = g.Count()
+                            });
+
+                        foreach (var group in stateCounts)
+                        {
+                            Console.WriteLine($"{group.State} = {group.Count}");
+                        }
+                        break;
+
+                    case "11":
+                        Console.WriteLine("Enter City Or State");
+                        input = Console.ReadLine();
+                        allContacts = books.SelectMany(b => b.Contacts).ToList();
+                        var sortedContacts = allContacts.OrderBy(c => c.FirstName).ThenBy(c => c.LastName).ToList();
+
+                        foreach (Contact cont in sortedContacts)
+                        {
+                            Console.WriteLine(cont);
+                        }
                         break;
 
                     case "0":

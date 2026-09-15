@@ -57,6 +57,20 @@ namespace AddressBookApp.Services
             ContactValidator validator = new ContactValidator();
             validator.Validate(contact);
         }
+        public List<Contact> SortByCity()
+        {
+            return contacts.OrderBy(c => c.City).ToList();
+        }
+
+        public List<Contact> SortByState()
+        {
+            return contacts.OrderBy(c => c.State).ToList();
+        }
+
+        public List<Contact> SortByZip()
+        {
+            return contacts.OrderBy(c => c.Zip).ToList();
+        }
 
         public void printAll()
         {
