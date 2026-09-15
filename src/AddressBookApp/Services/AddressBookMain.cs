@@ -21,6 +21,8 @@ namespace AddressBookApp.Services
                 Console.WriteLine("5. Count Contacts");
                 Console.WriteLine("6. Find Contacts by City or State");
                 Console.WriteLine("7. Display Contacts Group BY City");
+                Console.WriteLine("8. Display Contacts Group BY State");
+                Console.WriteLine("9. Display contacts grouped by city, and grouped by state");
                 Console.WriteLine("0. Exit");
 
                 Console.Write("> ");
@@ -206,6 +208,36 @@ namespace AddressBookApp.Services
                         state = Console.ReadLine();
 
                         books.SelectMany(b => b.Contacts).Where(c => c.State.Equals(state, StringComparison.OrdinalIgnoreCase)).ToList().ForEach(c => Console.WriteLine(c.ToString()));
+                        break;
+
+                    case "9":
+                        Console.WriteLine("----By City-----");
+                        city = Console.ReadLine();
+                        var allContacts = books.SelectMany(b => b.Contacts).ToList();
+                        var contactByCity = allContacts.GroupBy(c => c.City);
+                        foreach (var group in contactByCity)
+                        {
+                            Console.WriteLine($"{group.Key}:");
+
+                            foreach (Contact con in group)
+                            {
+                                Console.WriteLine(con);
+                            }
+                        }
+
+                        Console.WriteLine("----By State-----");
+                        city = Console.ReadLine();
+                        var contactByState = books.SelectMany(b => b.Contacts).GroupBy(c => c.State).ToList();
+                        foreach (var group in contactByState)
+                        {
+                            Console.WriteLine($"{group.Key}:");
+
+                            foreach (Contact con in group)
+                            {
+                                Console.WriteLine(con);
+                            }
+                        }
+
                         break;
 
                     case "0":
