@@ -23,7 +23,9 @@ namespace AddressBookApp.Services
                 Console.WriteLine("7. Display Contacts Group BY City");
                 Console.WriteLine("8. Display Contacts Group BY State");
                 Console.WriteLine("9. Display contacts grouped by city, and grouped by state");
+                Console.WriteLine("10. Count by city or State");
                 Console.WriteLine("0. Exit");
+
 
                 Console.Write("> ");
                 string choice = Console.ReadLine() ?? "";
