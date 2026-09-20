@@ -319,6 +319,38 @@ namespace AddressBookApp.Services
                         }
                         break;
 
+                    case "12":
+                        Console.WriteLine("Sort Contacts By:");
+                        Console.WriteLine("1. City");
+                        Console.WriteLine("2. State");
+                        Console.WriteLine("3. Zip");
+                        Console.Write("Enter your choice: ");
+                        string sortChoice = Console.ReadLine() ?? "";
+                        List<Contact> sortedContact;
+                        if (sortChoice == "1")
+                        {
+                            sortedContact = addressBook.SortByCity();
+                        }
+                        else if (sortChoice == "2")
+                        {
+                            sortedContact = addressBook.SortByState();
+                        }
+                        else if (sortChoice == "3")
+                        {
+                            sortedContact = addressBook.SortByZip();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid choice.");
+                            break;
+                        }
+                        foreach (Contact c in sortedContact)
+                        {
+                            Console.WriteLine(c);
+                        }
+
+                        break;
+
                     case "0":
                         return;
 
