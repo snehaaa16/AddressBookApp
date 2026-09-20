@@ -34,6 +34,8 @@ namespace AddressBookApp.Services
             Console.WriteLine("Contact added successfully.");
         }
 
+
+
         public List<Contact?> FindContactsByCityOrState(string location)
         {
             return contacts.Where(c => c.City.Equals(location, StringComparison.OrdinalIgnoreCase) || c.State.Equals(location, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -72,7 +74,7 @@ namespace AddressBookApp.Services
             return contacts.OrderBy(c => c.Zip).ToList();
         }
 
-        public void printAll()
+        public void PrintAll()
         {
             foreach(Contact contact in contacts)
             {

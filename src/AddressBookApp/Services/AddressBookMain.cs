@@ -107,7 +107,7 @@ namespace AddressBookApp.Services
                         break;
 
                     case "2":
-                        addressBook.printAll();
+                        addressBook.PrintAll();
                         break;
 
                     case "3":
@@ -251,7 +251,6 @@ namespace AddressBookApp.Services
 
                     case "9":
                         Console.WriteLine("----By City-----");
-                        city = Console.ReadLine();
                         var allContacts = books.SelectMany(b => b.Contacts).ToList();
                         var contactByCity = allContacts.GroupBy(c => c.City);
                         foreach (var group in contactByCity)
@@ -265,7 +264,6 @@ namespace AddressBookApp.Services
                         }
 
                         Console.WriteLine("----By State-----");
-                        city = Console.ReadLine();
                         var contactByState = books.SelectMany(b => b.Contacts).GroupBy(c => c.State).ToList();
                         foreach (var group in contactByState)
                         {
@@ -276,7 +274,6 @@ namespace AddressBookApp.Services
                                 Console.WriteLine(con);
                             }
                         }
-
                         break;
 
                     case "10":
@@ -313,8 +310,6 @@ namespace AddressBookApp.Services
                         break;
 
                     case "11":
-                        Console.WriteLine("Enter City Or State");
-                        input = Console.ReadLine();
                         allContacts = books.SelectMany(b => b.Contacts).ToList();
                         var sortedContacts = allContacts.OrderBy(c => c.FirstName).ThenBy(c => c.LastName).ToList();
 
