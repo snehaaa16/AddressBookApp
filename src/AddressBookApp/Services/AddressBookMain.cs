@@ -212,7 +212,6 @@ namespace AddressBookApp.Services
 
                     case "9":
                         Console.WriteLine("----By City-----");
-                        city = Console.ReadLine();
                         var allContacts = books.SelectMany(b => b.Contacts).ToList();
                         var contactByCity = allContacts.GroupBy(c => c.City);
                         foreach (var group in contactByCity)
@@ -226,7 +225,6 @@ namespace AddressBookApp.Services
                         }
 
                         Console.WriteLine("----By State-----");
-                        city = Console.ReadLine();
                         var contactByState = books.SelectMany(b => b.Contacts).GroupBy(c => c.State).ToList();
                         foreach (var group in contactByState)
                         {
