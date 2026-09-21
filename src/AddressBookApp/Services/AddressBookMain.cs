@@ -351,6 +351,22 @@ namespace AddressBookApp.Services
 
                         break;
 
+                    case "10":
+
+                        Console.Write("Enter city or state: ");
+                        string locationToCount = Console.ReadLine() ?? "";
+
+                        int count = books
+                            .SelectMany(b => b.Contacts)
+                            .Count(c =>
+                                c.City.Equals(locationToCount, StringComparison.OrdinalIgnoreCase) ||
+                                c.State.Equals(locationToCount, StringComparison.OrdinalIgnoreCase));
+
+                        Console.WriteLine(
+                            $"Total contacts in {locationToCount}: {count}");
+
+                        break;
+
                     case "0":
                         return;
 
