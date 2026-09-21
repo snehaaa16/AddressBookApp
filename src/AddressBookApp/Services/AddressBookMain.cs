@@ -274,6 +274,7 @@ namespace AddressBookApp.Services
                                 Console.WriteLine(con);
                             }
                         }
+<<<<<<< HEAD
                         break;
 
                     case "11":
@@ -315,7 +316,6 @@ namespace AddressBookApp.Services
                         {
                             Console.WriteLine(c);
                         }
-
                         break;
 
                     case "10":
@@ -333,6 +333,48 @@ namespace AddressBookApp.Services
                             $"Total contacts in {locationToCount}: {count}");
 
                         break;
+
+                    case "11":
+                        allContacts = books.SelectMany(b => b.Contacts).ToList();
+                        var sortedContacts = allContacts.OrderBy(c => c.FirstName).ThenBy(c => c.LastName).ToList();
+
+                        foreach (Contact cont in sortedContacts)
+                        {
+                            Console.WriteLine(cont);
+                        }
+                        break;
+
+                    case "12":
+                        Console.WriteLine("Sort Contacts By:");
+                        Console.WriteLine("1. City");
+                        Console.WriteLine("2. State");
+                        Console.WriteLine("3. Zip");
+                        Console.Write("Enter your choice: ");
+                        string sortChoice = Console.ReadLine() ?? "";
+                        List<Contact> sortedContact;
+                        if (sortChoice == "1")
+                        {
+                            sortedContact = addressBook.SortByCity();
+                        }
+                        else if (sortChoice == "2")
+                        {
+                            sortedContact = addressBook.SortByState();
+                        }
+                        else if (sortChoice == "3")
+                        {
+                            sortedContact = addressBook.SortByZip();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid choice.");
+                            break;
+                        }
+                        foreach (Contact c in sortedContact)
+                        {
+                            Console.WriteLine(c);
+                        }
+                        break;
+
 
                     case "0":
                         return;
