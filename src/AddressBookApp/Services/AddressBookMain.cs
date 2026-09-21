@@ -276,39 +276,6 @@ namespace AddressBookApp.Services
                         }
                         break;
 
-                    case "10":
-                        Console.WriteLine("--- By City ---");
-                        allContacts = books.SelectMany(b => b.Contacts).ToList();
-
-                        var cityCounts = allContacts
-                            .GroupBy(c => c.City)
-                            .Select(g => new
-                            {
-                                City = g.Key,
-                                Count = g.Count()
-                            });
-
-                        foreach (var group in cityCounts)
-                        {
-                            Console.WriteLine($"{group.City} = {group.Count}");
-                        }
-
-                        Console.WriteLine("--- By State ---");
-
-                        var stateCounts = allContacts
-                            .GroupBy(c => c.State)
-                            .Select(g => new
-                            {
-                                State = g.Key,
-                                Count = g.Count()
-                            });
-
-                        foreach (var group in stateCounts)
-                        {
-                            Console.WriteLine($"{group.State} = {group.Count}");
-                        }
-                        break;
-
                     case "11":
                         allContacts = books.SelectMany(b => b.Contacts).ToList();
                         var sortedContacts = allContacts.OrderBy(c => c.FirstName).ThenBy(c => c.LastName).ToList();
